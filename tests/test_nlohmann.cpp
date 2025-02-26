@@ -2,8 +2,9 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-using json = nlohmann::json;
+namespace nlohmann_test {
 
+using json = nlohmann::json;
 TEST(NlohmannTest, Normal) {
   json j = {
       {"pi", 3.141},
@@ -19,3 +20,4 @@ TEST(NlohmannTest, Normal) {
   ASSERT_NE(s.find("null"), std::string::npos);
   ASSERT_NE(s.find("42"), std::string::npos);
 }
+} // namespace nlohmann_test

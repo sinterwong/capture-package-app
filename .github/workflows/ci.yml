@@ -50,7 +50,7 @@ jobs:
             conan-${{ runner.os }}-${{ matrix.build_type }}-
 
       - name: Configure with Conan and CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_INSTALL_PREFIX=install -G Ninja -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_INSTALL_PREFIX=install -DBUILD_TESTS=ON -G Ninja -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
 
       - name: Build
         run: cmake --build build
@@ -58,6 +58,18 @@ jobs:
       - name: Install
         working-directory: build
         run: cmake --install .
+
+      - name: Run tests
+        run: |
+          echo "Running tests..."
+          cd install
+          if [ -x "tests/main" ]; then
+            echo "Running main test suite"
+            ./tests/main --gtest_filter=*.*
+          else
+            echo "Error: Test executable not found at tests/main"
+            exit 1
+          fi
 
     strategy:
       matrix:

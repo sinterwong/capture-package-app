@@ -2,8 +2,8 @@
 #include <rapidxml.hpp>
 #include <string>
 
+namespace rapidxml_test {
 using namespace rapidxml;
-
 TEST(RapidXmlTest, Normal) {
   std::string xml = "<root><node>capture-package-app</node></root>";
   xml_document<> doc;
@@ -11,3 +11,4 @@ TEST(RapidXmlTest, Normal) {
   xml_node<> *node = doc.first_node("root")->first_node("node");
   ASSERT_STREQ(node->value(), "capture-package-app");
 }
+} // namespace rapidxml_test
